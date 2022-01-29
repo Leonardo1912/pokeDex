@@ -1,0 +1,55 @@
+.pokedex{
+
+}
+.header{
+    border: 1px solid black;
+    text-align: center;
+}
+.content{
+    display: flex;
+    justify-content: space-between;
+}
+.pokemonsList{
+    border: 1px solid blue;
+    width: 60%;
+    text-align: center;
+}
+.singlePokemon{
+    border: 1px solid red;
+
+
+
+}
+.pokemons{
+    display: flex;
+    flex-wrap: wrap;
+}
+.pokemon{
+    border: 1px solid green;
+    width:33.333%;
+    height: 300px;
+    padding: 10px;
+
+}
+.photoPokemon{
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50%;
+}
+.photo{
+    border: 1px solid orange;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.pokemonName{
+    border: 1px solid red;
+    margin: 5px 0;
+
+}
+.types{
+    border: 1px solid blue;
+
+}
