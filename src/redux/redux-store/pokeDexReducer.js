@@ -1,59 +1,75 @@
 import {pokemonsAPI} from "../../api/api";
 
 const SET_POKEMONS = 'SET_POKEMONS'
-const SET_COUNT = 'SET_COUNT'
-const SET_NEXT_PAGE = 'SET_NEXT_PAGE'
 const SET_NEW_POKEMONS = 'SET_NEW_POKEMONS'
+const SET_FULL_DATA_POKEMONS = 'SET_FULL_DATA_POKEMONS'
+const SET_NEXT_PAGE = 'SET_NEXT_PAGE'
+
 
 let initialState = {
     pokemons: [],
-    pageLimit: 20,
+    fullDataPokemons: [],
+    pageLimit: 9,
     nextPage: "",
     count: 0,
     types: [],
-
 }
+
 
 const pokemonReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_POKEMONS: {
             return {...state, pokemons: [...action.pokemons]}
         }
-        case SET_COUNT: {
-            return {...state, count: action.count}
-        }
-        case SET_NEXT_PAGE: {
-            return {...state, nextPage: action.next}
-        }
-        case SET_NEW_POKEMONS:{
+        case SET_NEW_POKEMONS: {
             return {...state, pokemons: [...state.pokemons, ...action.pokemons]}
         }
-
+        case SET_FULL_DATA_POKEMONS: {
+            return {...state, fullDataPokemons: [...state.fullDataPokemons, ...action.fullDataPokemons]}
+        }
+        case SET_NEXT_PAGE: {
+            return {...state, nextPage: action.nextPage}
+        }
         default:
             return state;
     }
 }
 
-
 export const setPokemons = (pokemons) => ({type: SET_POKEMONS, pokemons})
-export const setCount = (count) => ({type: SET_COUNT, count})
-export const setNextPage = (next) => ({type: SET_NEXT_PAGE, next})
 export const setNewPokemons = (pokemons) => ({type: SET_NEW_POKEMONS, pokemons})
+export const setFullDataPokemons = (fullDataPokemons) => ({type: SET_FULL_DATA_POKEMONS, fullDataPokemons})
+export const setNextPage = (nextPage) => ({type: SET_NEXT_PAGE, nextPage})
+
 export const requestPokemons = (pageLimit) => {
     return async (dispatch) => {
         let data = await pokemonsAPI.getPokemons(pageLimit);
         dispatch(setPokemons(data.results))
-        dispatch(setCount(data.count))
+        let allDataPoke = await dispatch(getFullDataPokemons(data.results))
+        dispatch(setFullDataPokemons(allDataPoke))
         dispatch(setNextPage(data.next))
     }
 }
-export const requestNewPokemons = (nextPage) =>{
+
+
+export const getFullDataPokemons = (data) => {
+    return async () => {
+        const dataUrl = data.map(pok => pok.url)
+        return Promise.all(dataUrl.map(p => {
+            return pokemonsAPI.getPokemonsData(p)
+        }))
+    }
+}
+
+export const requestNewPokemons = (nextPage) => {
     return async (dispatch) => {
-        let newData = await pokemonsAPI.getUrl(nextPage);
+        let newData = await pokemonsAPI.getNextPokemons(nextPage);
         dispatch(setNewPokemons(newData.results))
         dispatch(setNextPage(newData.next))
+        let newAllDataPoke =  await dispatch(getFullDataPokemons(newData.results))
+        dispatch(setFullDataPokemons(newAllDataPoke))
     }
 
 }
+
 
 export default pokemonReducer;

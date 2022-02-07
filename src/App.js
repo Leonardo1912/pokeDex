@@ -3,7 +3,7 @@ import './App.css';
 import PokeDex from "./components/pokeDex/PokeDex";
 
 
-const App = (props) => {
+const App = () => {
   return (
       <div className="App">
         <PokeDex />

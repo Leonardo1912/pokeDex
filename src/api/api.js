@@ -1,11 +1,12 @@
 import * as  axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://pokeapi.co/api/v2/"
+    baseURL: "https://pokeapi.co/api/v2/",
+    headers: {}
 })
 
 export const pokemonsAPI = {
-    getPokemons(pageLimit = 20) {
+    getPokemons(pageLimit = 10) {
         return instance.get(`pokemon/?limit=${pageLimit}`)
             .then(response => {
                 return response.data
@@ -17,10 +18,16 @@ export const pokemonsAPI = {
                 return response.data
             })
     },
-    getUrl(nextPage){
-        return axios.get(nextPage)
-            .then(responsse => {
-                return responsse.data
+    getPokemonsData(url){
+        return axios.get(url)
+            .then(response => {
+                return response.data
+            })
+    },
+    getNextPokemons(nextPage){
+        return instance.get(nextPage)
+            .then(response => {
+                return response.data
             })
     }
 

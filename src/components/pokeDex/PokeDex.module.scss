@@ -16,6 +16,7 @@
 }
 .singlePokemon{
     border: 1px solid red;
+    width: 40%;
 }
 .pokemons{
     display: flex;
@@ -24,23 +25,23 @@
 .pokemon{
     border: 1px solid green;
     width:33.333%;
-    height: 300px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 
 }
 .photoPokemon{
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
-    height: 50%;
 }
+
 .photo{
-    border: 1px solid orange;
-    margin-left: auto;
-    margin-right: auto;
+   height: auto;
+    width: 100%;
 }
-
-
+.pokemonInfo{
+}
 .pokemonName{
     border: 1px solid red;
     margin: 5px 0;
