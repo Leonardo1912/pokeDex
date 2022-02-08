@@ -4,6 +4,7 @@ const SET_POKEMONS = 'SET_POKEMONS'
 const SET_NEW_POKEMONS = 'SET_NEW_POKEMONS'
 const SET_FULL_DATA_POKEMONS = 'SET_FULL_DATA_POKEMONS'
 const SET_NEXT_PAGE = 'SET_NEXT_PAGE'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 
 let initialState = {
@@ -13,6 +14,7 @@ let initialState = {
     nextPage: "",
     count: 0,
     types: [],
+    isFetching : true
 }
 
 
@@ -25,11 +27,15 @@ const pokemonReducer = (state = initialState, action) => {
             return {...state, pokemons: [...state.pokemons, ...action.pokemons]}
         }
         case SET_FULL_DATA_POKEMONS: {
-            return {...state, fullDataPokemons: [...state.fullDataPokemons, ...action.fullDataPokemons]}
+            return {...state, fullDataPokemons: [...state.fullDataPokemons, ...action.fullDataPokemons], isFetching: action.isFetching}
         }
         case SET_NEXT_PAGE: {
             return {...state, nextPage: action.nextPage}
         }
+        case TOGGLE_IS_FETCHING: {
+            return {...state, isFetching: action.isFetching}
+        }
+
         default:
             return state;
     }
@@ -39,6 +45,7 @@ export const setPokemons = (pokemons) => ({type: SET_POKEMONS, pokemons})
 export const setNewPokemons = (pokemons) => ({type: SET_NEW_POKEMONS, pokemons})
 export const setFullDataPokemons = (fullDataPokemons) => ({type: SET_FULL_DATA_POKEMONS, fullDataPokemons})
 export const setNextPage = (nextPage) => ({type: SET_NEXT_PAGE, nextPage})
+export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching})
 
 export const requestPokemons = (pageLimit) => {
     return async (dispatch) => {
@@ -47,8 +54,10 @@ export const requestPokemons = (pageLimit) => {
         let allDataPoke = await dispatch(getFullDataPokemons(data.results))
         dispatch(setFullDataPokemons(allDataPoke))
         dispatch(setNextPage(data.next))
+        dispatch(toggleIsFetching(false))
     }
 }
+
 
 
 export const getFullDataPokemons = (data) => {
@@ -59,6 +68,7 @@ export const getFullDataPokemons = (data) => {
         }))
     }
 }
+
 
 export const requestNewPokemons = (nextPage) => {
     return async (dispatch) => {

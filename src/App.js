@@ -4,11 +4,11 @@ import PokeDex from "./components/pokeDex/PokeDex";
 
 
 const App = () => {
-  return (
-      <div className="App">
-        <PokeDex />
-      </div>
-  );
+    return (
+        <div className="App">
+            <PokeDex/>
+        </div>
+    );
 }
 
 export default App;
