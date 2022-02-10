@@ -3,38 +3,32 @@ import style from "./PokeDex.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {
     requestNewPokemons,
-    requestPokemons,
+    requestPokemons, toggleIsFetching,
 } from "../../redux/redux-store/pokeDexReducer";
 import {NavLink, Route, Routes} from "react-router-dom";
-import {logDOM} from "@testing-library/react";
 
 const PokeDex = () => {
 
     let [poke, setPoke] = useState({
         id: 1,
-        sprites: {
-            other: {
-                home: {
-                    front_default: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png'
-                }
-            }
-        }
+        sprites: {other: {home: {front_default: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/1.png'}}}
     })
 
     let pokemons = useSelector(state => state.pokemonPage.fullDataPokemons)
     let pageLimit = useSelector(state => state.pokemonPage.pageLimit)
     let nextPage = useSelector(state => state.pokemonPage.nextPage)
+    let isFetching = useSelector(state => state.pokemonPage.isFetching)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(requestPokemons(pageLimit))
-        console.log(poke)
     }, [])
 
 
     let loadMore = () => {
-        dispatch(requestNewPokemons(nextPage))
+            dispatch(requestNewPokemons(nextPage))
+
     }
 
     return (
@@ -46,7 +40,8 @@ const PokeDex = () => {
                        element={<Pokemons poke={poke}
                                           pokemons={pokemons}
                                           setPoke={setPoke}
-                                          loadMore={loadMore}/>}/>
+                                          loadMore={loadMore}
+                                          isFetching={isFetching}/>}/>
             </Routes>
 
         </div>
@@ -54,6 +49,7 @@ const PokeDex = () => {
 }
 
 const Pokemons = (props) => {
+
     return (
         <div>
             <div className={style.content}>
@@ -66,6 +62,7 @@ const Pokemons = (props) => {
                     </div>
                     <div className={style.loadMore}>
                         <button onClick={props.loadMore}>Load More</button>
+
                     </div>
                 </div>
                 <div className={style.singlePokemon}>
@@ -83,60 +80,56 @@ const Pokemons = (props) => {
 
 const FullDataPokemon = (props) => {
 
-    console.log(props.poke)
-
     return (
-        <div>
+        <div className={style.dataPokemon}>
             <div className={style.exit}>
                 <NavLink to='/' className={style.exitButton}>X</NavLink>
             </div>
             <div className={style.fullDataPokemon}>
                 <img src={props.image}/>
             </div>
-            <div>
+            <div className={style.s}>
                 <div className={style.stats}>
                     <div className={style.statName}>{props.poke.name}</div>
-                    <div>{props.poke.id}</div>
+                    <div className={style.statType}>{props.poke.id}</div>
                 </div>
                 <div>
                     <div className={style.stats}>
-                        <div className={style.statName}>type </div>
-                        <div>{props.poke.types.map(p=>p.type.name + ' ')} </div>
+                        <div className={style.statName}>type</div>
+                        <div className={style.statType}>{props.poke.types.map(p => p.type.name + ' ')} </div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[1].stat.name}</div>
-                        <div>{props.poke.stats[1].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[1].base_stat}</div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[2].stat.name}</div>
-                        <div>{props.poke.stats[2].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[2].base_stat}</div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[0].stat.name}</div>
-                        <div>{props.poke.stats[0].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[0].base_stat}</div>
                     </div>
-
-
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[3].stat.name}</div>
-                        <div>{props.poke.stats[3].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[3].base_stat}</div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[4].stat.name}</div>
-                        <div>{props.poke.stats[4].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[4].base_stat}</div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>{props.poke.stats[5].stat.name}</div>
-                        <div>{props.poke.stats[5].base_stat}</div>
+                        <div className={style.statType}>{props.poke.stats[5].base_stat}</div>
                     </div>
                     <div className={style.stats}>
                         <div className={style.statName}>weight</div>
-                        <div>{props.poke.weight}</div>
+                        <div className={style.statType}>{props.poke.weight}</div>
                     </div>
 
                     <div className={style.stats}>
                         <div className={style.statName}>total moves</div>
-                        <div>{props.poke.moves.length}</div>
+                        <div className={style.statType}>{props.poke.moves.length}</div>
                     </div>
                 </div>
             </div>
@@ -153,17 +146,9 @@ const Pokemon = (props) => {
             </NavLink>
             <div className={style.pokemonInfo}>
                 <div className={style.pokemonName}>{props.pokemon.name}</div>
-                <div className={style.types}>Types</div>
+                <div className={style.types}>{props.pokemon.types.map(t => <div
+                    className={style.type}>{t.type.name}</div>)}</div>
             </div>
-        </div>
-    )
-}
-
-
-const Preloader = () => {
-    return (
-        <div>
-            WAIT!!!!!!
         </div>
     )
 }

@@ -14,7 +14,7 @@ let initialState = {
     nextPage: "",
     count: 0,
     types: [],
-    isFetching : true
+    isFetching: true,
 }
 
 
@@ -27,7 +27,7 @@ const pokemonReducer = (state = initialState, action) => {
             return {...state, pokemons: [...state.pokemons, ...action.pokemons]}
         }
         case SET_FULL_DATA_POKEMONS: {
-            return {...state, fullDataPokemons: [...state.fullDataPokemons, ...action.fullDataPokemons], isFetching: action.isFetching}
+            return {...state, fullDataPokemons: [...state.fullDataPokemons, ...action.fullDataPokemons]}
         }
         case SET_NEXT_PAGE: {
             return {...state, nextPage: action.nextPage}
@@ -54,7 +54,6 @@ export const requestPokemons = (pageLimit) => {
         let allDataPoke = await dispatch(getFullDataPokemons(data.results))
         dispatch(setFullDataPokemons(allDataPoke))
         dispatch(setNextPage(data.next))
-        dispatch(toggleIsFetching(false))
     }
 }
 

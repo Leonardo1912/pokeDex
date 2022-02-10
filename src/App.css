@@ -39,4 +39,8 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 
 .App{
   padding: 20px;
+  text-transform: capitalize;
+  background-image: url("https://s3.favim.com/orig/140427/background-pokeballs-pokemon-Favim.com-1708542.png");
+  -webkit-text-stroke: 1px black;
+  color: white;
 }
