@@ -3,7 +3,7 @@ import style from "./PokeDex.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {
     requestNewPokemons,
-    requestPokemons, toggleIsFetching,
+    requestPokemons,
 } from "../../redux/redux-store/pokeDexReducer";
 import {NavLink, Route, Routes} from "react-router-dom";
 
