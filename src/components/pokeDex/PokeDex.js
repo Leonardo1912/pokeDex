@@ -27,7 +27,7 @@ const PokeDex = () => {
 
 
     let loadMore = () => {
-            dispatch(requestNewPokemons(nextPage))
+        dispatch(requestNewPokemons(nextPage))
 
     }
 
@@ -78,8 +78,26 @@ const Pokemons = (props) => {
     )
 }
 
+const Types = (props) => {
+    return(
+        <div className={style.stats}>
+            <div className={style.statName}>{props.statName}</div>
+            <div className={style.statType}>{props.type}</div>
+        </div>
+    )
+}
+
 const FullDataPokemon = (props) => {
 
+    let info = {
+       name : ['name', 'id', 'type', 'attack', 'defense', 'hp', 'specialAttack', 'specialDefense', 'speed', 'weight', 'totalMoves'],
+       stats : [props.poke.name, props.poke.id, props.poke.types.map(p => p.type.name + ' '), props.poke.stats[1].base_stat,
+            props.poke.stats[2].base_stat, props.poke.stats[0].base_stat, props.poke.stats[3].base_stat, props.poke.stats[4].base_stat,
+            props.poke.stats[5].base_stat, props.poke.weight, props.poke.moves.length]
+    }
+    let newInfo = info.name.map( (x, i) => {
+        return {"name": x, "state": info.stats[i]}
+    });
     return (
         <div className={style.dataPokemon}>
             <div className={style.exit}>
@@ -88,50 +106,8 @@ const FullDataPokemon = (props) => {
             <div className={style.fullDataPokemon}>
                 <img src={props.image}/>
             </div>
-            <div className={style.s}>
-                <div className={style.stats}>
-                    <div className={style.statName}>{props.poke.name}</div>
-                    <div className={style.statType}>{props.poke.id}</div>
-                </div>
-                <div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>type</div>
-                        <div className={style.statType}>{props.poke.types.map(p => p.type.name + ' ')} </div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[1].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[1].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[2].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[2].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[0].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[0].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[3].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[3].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[4].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[4].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>{props.poke.stats[5].stat.name}</div>
-                        <div className={style.statType}>{props.poke.stats[5].base_stat}</div>
-                    </div>
-                    <div className={style.stats}>
-                        <div className={style.statName}>weight</div>
-                        <div className={style.statType}>{props.poke.weight}</div>
-                    </div>
-
-                    <div className={style.stats}>
-                        <div className={style.statName}>total moves</div>
-                        <div className={style.statType}>{props.poke.moves.length}</div>
-                    </div>
-                </div>
+           <div className={style.s}>
+                {newInfo.map((n) => <Types statName = {n.name} type = {n.state}/>)}
             </div>
         </div>
     )
