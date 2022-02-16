@@ -1,0 +1,42 @@
+.content {
+  display: flex;
+
+  .pokemonsList {
+    width: 60%;
+    text-align: center;
+
+    .pokemons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+    }
+
+    .loadMore {
+      padding: 10px;
+    }
+
+    .loadMore button {
+      width: 100%;
+      background: #008cff;
+      height: 50px;
+      border-radius: 10px;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+
+    }
+  }
+
+  .singlePokemon {
+    width: 20%;
+    position: fixed;
+    left: 70%;
+
+  }
+}
+
+.loadMore button:hover {
+  box-shadow: 0 10px 0 blue;
+
+}
