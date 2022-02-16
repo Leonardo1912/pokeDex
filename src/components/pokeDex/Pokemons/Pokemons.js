@@ -3,11 +3,13 @@ import {Route, Routes} from "react-router-dom";
 import React from "react";
 import Pokemon from "./Pokemon/Pokemon";
 import FullDataPokemon from "../FullDataPokemon/FullDataPokemon";
+import Preloader from "../../Preloader/Preloader";
 
 const Pokemons = (props) => {
     return (
         <div>
-            <div className={style.content}>
+            {!props.isFetching ? <Preloader/>:
+                <div className={style.content}>
                 <div className={style.pokemonsList}>
                     <div className={style.pokemons}>
                         {props.pokemons.map(pokemon => <Pokemon pokemon={pokemon}
@@ -28,7 +30,7 @@ const Pokemons = (props) => {
                                />}/>
                     </Routes>
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }

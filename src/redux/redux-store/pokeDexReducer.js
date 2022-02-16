@@ -49,11 +49,13 @@ export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFe
 
 export const requestPokemons = (pageLimit) => {
     return async (dispatch) => {
+        dispatch(toggleIsFetching(false))
         let data = await pokemonsAPI.getPokemons(pageLimit);
         dispatch(setPokemons(data.results))
         let allDataPoke = await dispatch(getFullDataPokemons(data.results))
         dispatch(setFullDataPokemons(allDataPoke))
         dispatch(setNextPage(data.next))
+        dispatch(toggleIsFetching(true))
     }
 }
 
@@ -71,11 +73,13 @@ export const getFullDataPokemons = (data) => {
 
 export const requestNewPokemons = (nextPage) => {
     return async (dispatch) => {
+        dispatch(toggleIsFetching(false))
         let newData = await pokemonsAPI.getNextPokemons(nextPage);
         dispatch(setNewPokemons(newData.results))
         dispatch(setNextPage(newData.next))
         let newAllDataPoke =  await dispatch(getFullDataPokemons(newData.results))
         dispatch(setFullDataPokemons(newAllDataPoke))
+        dispatch(toggleIsFetching(true))
     }
 
 }
