@@ -15,6 +15,7 @@ const Pokemons = (props) => {
                         {props.pokemons.map(pokemon => <Pokemon pokemon={pokemon}
                                                                 image={pokemon.sprites.other.home.front_default}
                                                                 setPoke={props.setPoke}
+                                                                poke={props.poke}
                                                                 key={pokemon.id}/>)}
                     </div>
                     <div className={style.loadMore}>
@@ -23,12 +24,9 @@ const Pokemons = (props) => {
                     </div>
                 </div>
                 <div className={style.singlePokemon}>
-                    <Routes>
-                        <Route path={`/${props.poke.id}`}
-                               element={<FullDataPokemon poke={props.poke}
-                                                         image={props.poke.sprites.other.home.front_default}
-                               />}/>
-                    </Routes>
+                    {props.poke.length !== 0?
+                        <FullDataPokemon poke={props.poke} setPoke={props.setPoke}/>
+                    :<></>}
                 </div>
             </div>}
         </div>

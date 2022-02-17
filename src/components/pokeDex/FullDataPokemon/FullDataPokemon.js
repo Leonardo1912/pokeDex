@@ -1,5 +1,4 @@
 import style from "./FullDataPokemon.module.scss";
-import {NavLink} from "react-router-dom";
 import React from "react";
 
 const FullDataPokemon = (props) => {
@@ -16,10 +15,10 @@ const FullDataPokemon = (props) => {
     return (
         <div className={style.dataPokemon}>
             <div className={style.exit}>
-                <NavLink to='/' className={style.exitButton}>X</NavLink>
+                <div onClick={()=>{props.setPoke([])}}className={style.exitButton}>X</div>
             </div>
             <div className={style.fullDataPokemon}>
-                <img src={props.image}/>
+                <img src={props.poke.sprites.other.home.front_default}/>
             </div>
             <div className={style.s}>
                 {newInfo.map((n) => <Types statName = {n.name} type = {n.state}/>)}
